@@ -22,7 +22,12 @@ def stations_by_distance(
     stations -- list of `MonitoringStation` objects to calculate the distance to
     p -- tuple of a coordinate to calculate the distance to
     """
-    raise NotImplementedError("stub")
+
+    # Calculate distances between all stations
+    distances = [(station, _distance_between(p, station.coord)) for station in stations]
+
+    # Sort the list by the second element of the tuple (distance) and return the list
+    return sorted_by_key(distances, 1)
 
 
 def _distance_between(a: tuple[float, float], b: tuple[float, float]) -> float:
