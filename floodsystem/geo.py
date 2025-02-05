@@ -6,6 +6,7 @@
 geographical data.
 
 """
+import math
 
 from .station import MonitoringStation
 from .utils import sorted_by_key  # noqa
@@ -22,3 +23,11 @@ def stations_by_distance(
     p -- tuple of a coordinate to calculate the distance to
     """
     raise NotImplementedError("stub")
+
+
+def _distance_between(a: tuple[float, float], b: tuple[float, float]) -> float:
+    """Calculates the distance between two 2D coordinates each given as a tuple of floats"""
+
+    return math.sqrt(
+        (a[0] - b[0])**2 + (a[1] - b[1])**2
+    )
