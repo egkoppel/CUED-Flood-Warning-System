@@ -27,7 +27,7 @@ def test_stations_by_distance_correct_distance():
     assert abs(dist[1]) <= 1e-6
 
     dist = stations_by_distance([station_list[1]], (0, 0))[0]
-    assert abs(dist[1] - 5) <= 1e-6
+    assert abs(dist[1] - 555807) <= 10
 
     dist = stations_by_distance([station_list[0]], (5, 12))[0]
-    assert abs(dist[1] - 13) <= 1e-6
+    assert abs(dist[1] - 1443970) <= 10
