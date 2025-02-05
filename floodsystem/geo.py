@@ -30,6 +30,17 @@ def stations_by_distance(
     return sorted_by_key(distances, 1)
 
 
+def stations_within_radius(
+        stations: list[MonitoringStation],
+        centre: tuple[float, float],
+        r: float
+) -> list[MonitoringStation]:
+    """Returns a list of `MonitoringStation` objects within `r` meters of the point `centre`"""
+
+    all_stations = stations_by_distance(stations, centre)
+    return list(filter(lambda station: station[1] <= r, all_stations))
+
+
 def _haversine_distance_between(a: tuple[float, float], b: tuple[float, float], r: float = 6371009) -> float:
     """Calculates the haversine distance between two coordinates each given as a tuple of floats (lat, long)
 
