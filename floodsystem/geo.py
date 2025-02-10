@@ -56,6 +56,19 @@ def _haversine_distance_between(a: tuple[float, float], b: tuple[float, float], 
         0.5 * (1 - cos(radians(abs(φ0 - φ1))) + cos(radians(φ0))*cos(radians(φ1))*(1 - cos(radians(abs(λ0 - λ1)))))
     ))
 
+def rivers_with_station(stations):
+    return {station.river for station in stations if station.river}
+
+def stations_by_river(stations):
+    river_dict = {}
+    for station in stations:
+        if station.river:
+            if station.river not in river_dict:
+                river_dict[station.river] = []
+            river_dict[station.river].append(station)
+    return river_dict
+
+
 
 def rivers_by_station_number(stations, N):
 
