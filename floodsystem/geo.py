@@ -55,3 +55,24 @@ def _haversine_distance_between(a: tuple[float, float], b: tuple[float, float], 
     return 2 * r * asin(sqrt(
         0.5 * (1 - cos(radians(abs(φ0 - φ1))) + cos(radians(φ0))*cos(radians(φ1))*(1 - cos(radians(abs(λ0 - λ1)))))
     ))
+
+
+def rivers_by_station_number(stations, N):
+
+    from collections import Counter
+
+    # Count number of stations per river
+    river_counts = Counter(station.river for station in stations if station.river)
+
+    # Convert to sorted list of tuples (river, count), sorted in descending order
+    sorted_rivers = sorted(river_counts.items(), key=lambda x: x[1], reverse=True)
+
+    # Find cutoff number of stations for the Nth entry
+    if N > len(sorted_rivers):
+        return sorted_rivers  # If N is larger than the list, return everything
+
+    min_count = sorted_rivers[N - 1][1]  # Get the station count at Nth position
+
+    # Include all rivers with station counts >= min_count
+    return [(river, count) for river, count in sorted_rivers if count >= min_count]
+
