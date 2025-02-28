@@ -71,7 +71,7 @@ def test_inconsistent_typical_range_stations():
 
 # Test that the station relative water level is calculated correctly
 def test_relative_water_level():
-        station = MonitoringStation("test-id", "measure-id", "Test Station", (0, 0), (1.0, 3.0), "Test River", "Test Town")
+        station = MonitoringStation("1", "m1", "Station1", (0, 0), (1.0, 3.0), "River 1", "Town 1")
         station.latest_level = 2.0
         assert station.relative_water_level() == 0.5
         
