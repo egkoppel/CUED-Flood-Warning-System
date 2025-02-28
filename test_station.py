@@ -68,3 +68,24 @@ def test_inconsistent_typical_range_stations():
     inconsistent_stations = inconsistent_typical_range_stations(stations)
     
     assert set(station.name for station in inconsistent_stations) == {"Station2", "Station3", "Station4", "Station5"}
+
+# Test that the station relative water level is calculated correctly
+def test_relative_water_level():
+        station = MonitoringStation("test-id", "measure-id", "Test Station", (0, 0), (1.0, 3.0), "Test River", "Test Town")
+        station.latest_level = 2.0
+        assert station.relative_water_level() == 0.5
+        
+        station.latest_level = 3.0
+        assert station.relative_water_level() == 1.0
+             
+        station.latest_level = 1.0
+        assert station.relative_water_level() == 0.0
+        
+        station.latest_level = 4.0
+        assert station.relative_water_level() == 1.5
+        
+        station.typical_range = None
+        assert station.relative_water_level() is None
+        
+        station.typical_range = (3.0, 1.0)  # Inconsistent range
+        assert station.relative_water_level() is None
