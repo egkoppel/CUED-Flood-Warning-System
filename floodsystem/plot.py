@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-def plot_water_levels(station, dates, levels):
-    """Plots water level data for a given station over time."""
+
+def _add_water_level_to_plot(station, dates, levels):
     if not dates or not levels:
         print(f"No data available for {station.name}")
         return
@@ -13,6 +13,10 @@ def plot_water_levels(station, dates, levels):
     # Plot typical low and high levels
     plt.axhline(y=station.typical_range[0], color='r', linestyle='--', label="Typical Low")
     plt.axhline(y=station.typical_range[1], color='g', linestyle='--', label="Typical High")
+
+
+def plot_water_levels(station, dates, levels):
+    _add_water_level_to_plot(station, dates, levels)
 
     # Labels and title
     plt.xlabel("Date")
@@ -26,4 +30,3 @@ def plot_water_levels(station, dates, levels):
 
     # Show plot
     plt.show()
-
