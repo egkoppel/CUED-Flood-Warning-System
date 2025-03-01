@@ -1,10 +1,14 @@
 # threshold for task 2B
+from floodsystem.utils import sorted_by_key
+
+
 def stations_level_over_threshold(stations, tol):
     risk_stations = []
     for station in stations:
         if station.relative_water_level() is not None and station.relative_water_level() > tol:
             risk_stations.append((station, station.relative_water_level()))
-    return risk_stations
+    return sorted_by_key(risk_stations, 1, reverse=True)
+
 
 def stations_highest_rel_level(stations, N):
     """Returns a list of N stations with the highest relative water levels"""
