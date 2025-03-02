@@ -12,7 +12,7 @@ from floodsystem.utils import sorted_by_key
 
 
 def polyfit(dates, levels, p):
-    combined_sorted = sorted_by_key(zip(dates, levels), 1)
+    combined_sorted = sorted_by_key(zip(dates, levels), 0)
     unzipped = list(zip(*combined_sorted))
     dates = unzipped[0]
     levels = unzipped[1]
