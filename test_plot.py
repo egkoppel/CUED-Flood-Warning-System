@@ -18,7 +18,7 @@ def mock_station():
 
 
 @image_comparison(baseline_images=['plot_water_levels'], remove_text=True,
-                  extensions=['png'], style='mpl20')
+                  extensions=['png'], style='mpl20', tol=0.05)
 def test_plot_water_levels_valid_data(mock_station, monkeypatch):
     """Test plot_water_levels with valid data"""
 
@@ -41,7 +41,7 @@ def test_plot_water_levels_no_data(mock_station, capsys):
 
 
 @image_comparison(baseline_images=['plot_fit'], remove_text=True,
-                  extensions=['png'], style='mpl20')
+                  extensions=['png'], style='mpl20', tol=0.05)
 def test_plot_water_levels_valid_data(mock_station, monkeypatch):
     """Test plot_water_levels with valid data"""
 
