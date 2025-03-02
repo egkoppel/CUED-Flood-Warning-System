@@ -1,16 +1,22 @@
-from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station, rivers_by_station_number, stations_by_river
+import pytest
+
+from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station, rivers_by_station_number, \
+    stations_by_river
 from floodsystem.station import MonitoringStation
 
-station_list = [
-    MonitoringStation(0, 0, "A", (0, 0), 0, "River A", ""),
-    MonitoringStation(1, 0, "A", (3.0, 4.0), 0, "River B", ""),
-    MonitoringStation(1, 0, "A", (5.5, 5.5), 0, "River C", ""),
-    MonitoringStation(0, 0, "A", (50, 50), 0, "River A", ""),
-    MonitoringStation(1, 0, "A", (55, 55), 0, "River C", ""),
-]
+
+@pytest.fixture
+def station_list():
+    return [
+        MonitoringStation(0, 0, "A", (0, 0), 0, "River A", ""),
+        MonitoringStation(1, 0, "A", (3.0, 4.0), 0, "River B", ""),
+        MonitoringStation(1, 0, "A", (5.5, 5.5), 0, "River C", ""),
+        MonitoringStation(0, 0, "A", (50, 50), 0, "River A", ""),
+        MonitoringStation(1, 0, "A", (55, 55), 0, "River C", ""),
+    ]
 
 
-def test_stations_by_distance_is_sorted():
+def test_stations_by_distance_is_sorted(station_list):
     ret = stations_by_distance(station_list, (0, 0))
     ret = [dist for _, dist in ret]
     assert sorted(ret) == ret
@@ -24,7 +30,7 @@ def test_stations_by_distance_is_sorted():
     assert sorted(ret) == ret
 
 
-def test_stations_by_distance_correct_distance():
+def test_stations_by_distance_correct_distance(station_list):
     dist = stations_by_distance([station_list[0]], (0, 0))[0]
     assert abs(dist[1]) <= 1e-6
 
@@ -35,7 +41,7 @@ def test_stations_by_distance_correct_distance():
     assert abs(dist[1] - 1443970) <= 10
 
 
-def test_stations_within_radius():
+def test_stations_within_radius(station_list):
     within_radius = stations_within_radius(station_list, (0, 0), 0)
     assert len(within_radius) == 1
 
@@ -46,14 +52,15 @@ def test_stations_within_radius():
     assert len(within_radius) == 2
 
 
-def test_rivers_with_station():
+def test_rivers_with_station(station_list):
     river_names = rivers_with_station(station_list)
 
     assert river_names == {"River A", "River B", "River C"}
     assert "River A" in river_names
     assert "River D" not in river_names  # Should not be present
 
-def test_rivers_by_station_number():
+
+def test_rivers_by_station_number(station_list):
     # Get top 2 rivers with most stations
     top_rivers = rivers_by_station_number(station_list, 2)
 
@@ -66,7 +73,8 @@ def test_rivers_by_station_number():
     all_rivers = rivers_by_station_number(station_list, 10)
     assert len(all_rivers) == 3  # There are only 3 unique rivers
 
-def test_stations_by_river():
+
+def test_stations_by_river(station_list):
     river_dict = stations_by_river(station_list)
 
     assert len(river_dict["River A"]) == 2  # Two stations on River A
