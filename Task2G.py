@@ -82,14 +82,15 @@ def main():
     # Many towns are under 1, so classify these as moderate, <5 as high, and anything above as severe
     for town, score in towns.items():
         mean_score = score[0] / score[1]
+        town_name_padded = " "*(21 - len(town))
         if mean_score < 1e-6:
-            print(f"{town}:{" "*(21 - len(town))}Low risk (score: {mean_score:.3f} based on {score[1]} stations)")
+            print(f"{town}:{town_name_padded}Low risk (score: {mean_score:.3f} based on {score[1]} stations)")
         elif mean_score < 1:
-            print(f"{town}:{" "*(21 - len(town))}Moderate risk (score: {mean_score:.3f} based on {score[1]} stations)")
+            print(f"{town}:{town_name_padded}Moderate risk (score: {mean_score:.3f} based on {score[1]} stations)")
         elif mean_score < 5:
-            print(f"{town}:{" "*(21 - len(town))}High risk (score: {mean_score:.3f} based on {score[1]} stations)")
+            print(f"{town}:{town_name_padded}High risk (score: {mean_score:.3f} based on {score[1]} stations)")
         else:
-            print(f"{town}:{" "*(21 - len(town))}Severe risk (score: {mean_score:.3f} based on {score[1]} stations)")
+            print(f"{town}:{town_name_padded}Severe risk (score: {mean_score:.3f} based on {score[1]} stations)")
 
 
 if __name__ == "__main__":
