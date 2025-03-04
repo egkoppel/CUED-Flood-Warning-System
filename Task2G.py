@@ -18,7 +18,7 @@ def main():
     # Take only the stations that are already near to the typical high level
     stations = stations_level_over_threshold(stations, 0.8)
 
-    print(f"Calculating for {len(stations)} stations")
+    print(f"Calculating based on {len(stations)} stations")
     print(f"0/{len(stations)}", end="\r")
 
     # Then calculate the polynomial fit with degree 4 based on the past week, and use it to predict the values for
@@ -69,6 +69,9 @@ def main():
     for score, station in zip(station_scores, stations):
         if score is None:
             continue
+        if station[0].town is None:
+            continue
+
         if station[0].town in towns.keys():
             towns[station[0].town][0] += score
             towns[station[0].town][1] += 1
@@ -80,13 +83,13 @@ def main():
     for town, score in towns.items():
         mean_score = score[0] / score[1]
         if mean_score < 1e-6:
-            print(f"{town}: Low risk (score: {mean_score} based on {score[1]} stations)")
+            print(f"{town}:{" "*(21 - len(town))}Low risk (score: {mean_score:.3f} based on {score[1]} stations)")
         elif mean_score < 1:
-            print(f"{town}: Moderate risk (score: {mean_score} based on {score[1]} stations)")
+            print(f"{town}:{" "*(21 - len(town))}Moderate risk (score: {mean_score:.3f} based on {score[1]} stations)")
         elif mean_score < 5:
-            print(f"{town}: High risk (score: {mean_score} based on {score[1]} stations)")
+            print(f"{town}:{" "*(21 - len(town))}High risk (score: {mean_score:.3f} based on {score[1]} stations)")
         else:
-            print(f"{town}: Severe risk (score: {mean_score} based on {score[1]} stations)")
+            print(f"{town}:{" "*(21 - len(town))}Severe risk (score: {mean_score:.3f} based on {score[1]} stations)")
 
 
 if __name__ == "__main__":
